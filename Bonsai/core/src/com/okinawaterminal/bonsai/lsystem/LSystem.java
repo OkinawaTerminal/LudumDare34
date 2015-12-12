@@ -5,21 +5,21 @@ import java.util.List;
 import java.util.Random;
 
 public class LSystem {
-	public String[] symbols;
 	public String axiom;
 	public String[] rules;
 	
 	private Random rng;
 	
-	public LSystem(String[] symbols, String axiom, String[] rules) {
-		this.symbols = stripWhiteSpace(symbols);
+	public String lString;
+	
+	public LSystem(String axiom, String[] rules) {
 		this.axiom = axiom;
 		this.rules = stripWhiteSpace(rules);
 		
 		rng = new Random();
 	}
 	
-	public String run(int numGenerations, float angle, float distance) {
+	public String run(int numGenerations) {
 		String currentString = axiom;
 		
 		for (int n = 0; n < numGenerations; n++) {
@@ -31,7 +31,8 @@ public class LSystem {
 			}
 			currentString = nextString;
 		}
-		return currentString;
+		lString = currentString;
+		return lString;
 	}
 	
 	private String[] stripWhiteSpace(String[] strings) {
