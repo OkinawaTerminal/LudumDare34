@@ -105,7 +105,7 @@ public class LNode extends Object3D{
 		}
 	}
 	
-	public void buildGeometry(float maxBranchRad) {
+	public void buildGeometry(float maxBranchRad, float leafSize, Color barkColor, Color leafColor) {
 		if (length > 0) {
 			float maxRad = maxBranchRad * sizeMax;
 			float minRad = maxBranchRad * sizeMin;
@@ -114,19 +114,19 @@ public class LNode extends Object3D{
 			Node node1 = modelBuilder.node();
 			node1.id = "branch";
 			MeshPartBuilder meshBuilder;
-			meshBuilder = modelBuilder.part("part1", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, Color.BROWN)));
+			meshBuilder = modelBuilder.part("part1", GL20.GL_TRIANGLE_FAN, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, barkColor)));
 			meshBuilder.vertex(
-					0.000000f * maxRad, 0.000000f, -0.500000f * maxRad,
+					0.000000f * maxRad, -0.000000f, -0.500000f * maxRad,
 					0.000000f * minRad, length, -0.500000f * minRad,
-					0.433013f * maxRad, 0.000000f, -0.250000f * maxRad,
+					0.433013f * maxRad, -0.000000f, -0.250000f * maxRad,
 					0.433013f * minRad, length, -0.250000f * minRad,
 					0.433013f * maxRad, 0.000000f, 0.250000f * maxRad,
 					0.433013f * minRad, length, 0.250000f * minRad,
-					0.000000f * maxRad, 0.000000f, 0.500000f * maxRad,
-					0.000000f * minRad, length, 0.500000f * minRad,
+					-0.000000f * maxRad, 0.000000f, 0.500000f * maxRad,
+					-0.000000f * minRad, length, 0.500000f * minRad,
 					-0.433013f * maxRad, 0.000000f, 0.250000f * maxRad,
 					-0.433013f * minRad, length, 0.250000f * minRad,
-					-0.433013f * maxRad, 0.000000f, -0.250000f * maxRad,
+					-0.433013f * maxRad, -0.000000f, -0.250000f * maxRad,
 					-0.433013f * minRad, length, -0.250000f * minRad
 			);
 			short[] indices = new short[] {
@@ -158,8 +158,8 @@ public class LNode extends Object3D{
 				Node node2 = modelBuilder.node();
 				node2.id = "leaves";
 				node2.translation.set(0, length, 0);
-				meshBuilder = modelBuilder.part("leaves", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse,  Color.GREEN)));
-				meshBuilder.sphere(length * 3, length * 3, length * 3, 6, 4);
+				meshBuilder = modelBuilder.part("leaves", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, leafColor)));
+				meshBuilder.sphere(leafSize, leafSize, leafSize, 6, 4);
 			}
 			model = modelBuilder.end();
 			modelInstance = new ModelInstance(model);
@@ -167,7 +167,7 @@ public class LNode extends Object3D{
 		}
 		for (int i = 0; i < children.size(); i++) {
 			LNode child = (LNode)children.get(i);
-			child.buildGeometry(maxBranchRad);
+			child.buildGeometry(maxBranchRad, leafSize, barkColor, leafColor);
 		}
 	}
 	

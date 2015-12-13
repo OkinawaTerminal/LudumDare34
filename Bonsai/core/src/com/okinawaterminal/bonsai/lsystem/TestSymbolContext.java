@@ -4,19 +4,28 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.Color;
+
 public class TestSymbolContext extends LSymbolContext{
 
 	private Deque<LNode> nodeStack;
 	private Random rng;
 	private float maxRandAngle;
 	private float treeBaseWidth;
+	private Color barkColor;
+	private Color leafColor;
+	private float leafSize;
 	
-	public TestSymbolContext(float angle, float distance, float maxRandAngle, float treeBaseWidth) {
+	
+	public TestSymbolContext(float angle, float distance, float maxRandAngle, float treeBaseWidth, float leafSize, Color barkColor, Color leafColor) {
 		super(angle, distance);
 		nodeStack = new ArrayDeque<LNode>();
 		rng = new Random();
 		this.maxRandAngle = maxRandAngle;
 		this.treeBaseWidth = treeBaseWidth;
+		this.barkColor = barkColor;
+		this.leafColor = leafColor;
+		this.leafSize = leafSize;
 	}
 
 	@Override
@@ -56,7 +65,7 @@ public class TestSymbolContext extends LSymbolContext{
 	public LNode endParse() {
 		root.updateMatrixWorld(true);
 		root.categorize();
-		root.buildGeometry(treeBaseWidth);
+		root.buildGeometry(treeBaseWidth, leafSize, barkColor, leafColor);
 		return root;
 	}
 	

@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Random;
 
 public class LSystem {
-	public String axiom;
+	public char axiom;
 	public String[] rules;
 	
 	private Random rng;
 	
 	public String lString;
 	
-	public LSystem(String axiom, String[] rules) {
+	public LSystem(char axiom, String[] rules) {
 		this.axiom = axiom;
 		this.rules = stripWhiteSpace(rules);
 		
@@ -20,7 +20,7 @@ public class LSystem {
 	}
 	
 	public String run(int numGenerations) {
-		String currentString = axiom;
+		String currentString = String.valueOf(axiom);
 		
 		for (int n = 0; n < numGenerations; n++) {
 			String nextString = "";

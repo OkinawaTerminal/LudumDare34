@@ -1,0 +1,40 @@
+{
+  "ruleSets": [
+    {
+      "name": "Bonsai",
+      "rules": [
+        "X -> F-[[X]+FX]+F[+X]-X",
+        "X -> F+[X-[X]]-F[-FX]+X",
+        "F -> FF"
+      ],
+      "defaults": {
+        "axiom": "X",
+        "numGenerations": 3,
+        "branchingAngle": 45.0,
+        "smallestLength": 35.0,
+        "maxRandAngle": 45.0,
+        "trunkBaseSize": 75.0,
+        "leafClusterSize": 120.0,
+        "barkColor": "BROWN",
+        "leafColor": "CORAL"
+      }
+    },
+    {
+      "name": "Koch Curve",
+      "rules": [
+        "F -> F+F-F-F+F"
+      ],
+      "defaults": {
+        "axiom": "F",
+        "numGenerations": 2,
+        "branchingAngle": 90.0,
+        "smallestLength": 45.0,
+        "maxRandAngle": 0.0,
+        "trunkBaseSize": 30.0,
+        "leafClusterSize": 120.0,
+        "barkColor": "BROWN",
+        "leafColor": "CORAL"
+      }
+    }
+  ]
+}

@@ -15,11 +15,8 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.okinawaterminal.bonsai.lsystem.LGraphBuilder;
+import com.okinawaterminal.bonsai.control.BonsaiController;
 import com.okinawaterminal.bonsai.lsystem.LNode;
-import com.okinawaterminal.bonsai.lsystem.LSymbolContext;
-import com.okinawaterminal.bonsai.lsystem.LSystem;
-import com.okinawaterminal.bonsai.lsystem.TestSymbolContext;
 
 public class Main extends ApplicationAdapter {
 	Camera cam;
@@ -30,29 +27,23 @@ public class Main extends ApplicationAdapter {
 	Material groundMaterial;
 	Model groundModel;
 	ModelInstance groundInstance;
+	BonsaiController bonsaiController;
 	
 	@Override
 	public void create () {
+		bonsaiController = new BonsaiController("ruleSets.json");
+		bonsaiController.selectRuleSet("Bonsai");
+		bonsaiController.buildTree();
+		
 		cam = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		cam.position.set(0, 0, 800);
-		cam.lookAt(0, 0, 0);
+		cam.position.set(0, 400, 700);
+		cam.lookAt(0, 200, 0);
 		cam.near = 1.0f;
 		cam.far = 10000.0f;
 		cam.update();
 		camController = new CameraInputController(cam);
 		Gdx.input.setInputProcessor(camController);
 		mb = new ModelBatch();
-		
-		String[] rules = new String[] {
-			"X -> F-[[X]+X]+F[+FX]-X",
-//			"X -> F+[X-[X]]-F[-FX]+X",
-			"F -> FF"
-		};
-		LSystem lSystem = new LSystem("X", rules);
-		String res = lSystem.run(3);
-		System.out.println(res);
-		LSymbolContext context = new TestSymbolContext(45, 25, 45, 75);
-		graph = LGraphBuilder.buildGraph(lSystem, context);
 		
 		groundTexture = new Texture(Gdx.files.internal("ground.png"));
 		groundMaterial = new Material(new TextureAttribute(TextureAttribute.Diffuse, groundTexture));
@@ -62,9 +53,6 @@ public class Main extends ApplicationAdapter {
 		MeshPartBuilder meshBuilder = modelBuilder.part("ground", GL20.GL_TRIANGLES, Usage.Position | Usage.TextureCoordinates, groundMaterial);
 		meshBuilder.setUVRange(0, 0, 1, 1);
 		meshBuilder.rect(-200, -1, -200, -200, -1, 200, 200, -1, 200, 200, -1, -200, 0, 1, 0);
-//		meshBuilder.vertex(
-//				
-//		);
 		groundModel = modelBuilder.end();
 		groundInstance = new ModelInstance(groundModel);
 	}
@@ -77,14 +65,14 @@ public class Main extends ApplicationAdapter {
 		
 		mb.begin(cam);
 		mb.render(groundInstance);
-		graph.render(mb);
+		bonsaiController.treeGraph.render(mb);
 		mb.end();
 	}
 	
 	@Override
 	public void dispose() {
 		mb.dispose();
-		graph.dispose();
+		bonsaiController.dispose();
 		groundModel.dispose();
 		groundTexture.dispose();
 	}
