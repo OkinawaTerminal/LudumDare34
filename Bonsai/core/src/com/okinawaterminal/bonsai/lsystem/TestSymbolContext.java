@@ -50,9 +50,9 @@ public class TestSymbolContext extends LSymbolContext{
 
 	@Override
 	public LNode endParse() {
-		root.categorize();
-		root.buildGeometry();
 		root.updateMatrixWorld(true);
+		root.categorize();
+		root.buildGeometry(50f);
 		return root;
 	}
 	
