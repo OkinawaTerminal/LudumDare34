@@ -7,8 +7,6 @@ import com.okinawaterminal.bonsai.core.Object3D;
 public class LNode extends Object3D{
 
 	public float length;
-	public float theta;
-	public float phi;
 	
 	public LNode() {
 		super("branch");
@@ -20,13 +18,19 @@ public class LNode extends Object3D{
 	}
 	
 	public void render(ShapeRenderer sr) {
-		Vector3 pos1 = localToWorld(new Vector3());
-		Vector3 pos2 = localToWorld(new Vector3(0, length, 0));
-		sr.line(pos1.x, pos1.y, pos2.x, pos2.y);
+		sr.line(localToWorld(new Vector3()), localToWorld(new Vector3(0, length, 0)));
 		
 		for (int i = 0; i < children.size(); i++) {
 			LNode child = (LNode)children.get(i);
 			child.render(sr);
 		}
+	}
+	
+	public void categorize() {
+		
+	}
+	
+	public void buildGeometry() {
+		
 	}
 }
