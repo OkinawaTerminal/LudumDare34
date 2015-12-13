@@ -8,11 +8,15 @@ public class TestSymbolContext extends LSymbolContext{
 
 	private Deque<LNode> nodeStack;
 	private Random rng;
+	private float maxRandAngle;
+	private float treeBaseWidth;
 	
-	public TestSymbolContext(float angle, float distance) {
+	public TestSymbolContext(float angle, float distance, float maxRandAngle, float treeBaseWidth) {
 		super(angle, distance);
 		nodeStack = new ArrayDeque<LNode>();
 		rng = new Random();
+		this.maxRandAngle = maxRandAngle;
+		this.treeBaseWidth = treeBaseWidth;
 	}
 
 	@Override
@@ -52,14 +56,14 @@ public class TestSymbolContext extends LSymbolContext{
 	public LNode endParse() {
 		root.updateMatrixWorld(true);
 		root.categorize();
-		root.buildGeometry(50f);
+		root.buildGeometry(treeBaseWidth);
 		return root;
 	}
 	
 	private void createNextNode() {
 		LNode newNode = new LNode();
 		newNode.translateY(currentNode.length);
-		newNode.rotateY(rng.nextFloat() * 45);
+		newNode.rotateY(rng.nextFloat() * maxRandAngle);
 		currentNode.add(newNode);
 		currentNode = newNode;
 	}

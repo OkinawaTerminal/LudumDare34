@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g3d.Model;
 import com.badlogic.gdx.graphics.g3d.ModelBatch;
 import com.badlogic.gdx.graphics.g3d.ModelInstance;
 import com.badlogic.gdx.graphics.g3d.attributes.ColorAttribute;
+import com.badlogic.gdx.graphics.g3d.model.Node;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -110,6 +111,8 @@ public class LNode extends Object3D{
 			float minRad = maxBranchRad * sizeMin;
 			ModelBuilder modelBuilder = new ModelBuilder();
 			modelBuilder.begin();
+			Node node1 = modelBuilder.node();
+			node1.id = "branch";
 			MeshPartBuilder meshBuilder;
 			meshBuilder = modelBuilder.part("part1", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, Color.BROWN)));
 			meshBuilder.vertex(
@@ -150,6 +153,13 @@ public class LNode extends Object3D{
 			};
 			for (int i = 0; i < indices.length; i += 3) {
 				meshBuilder.index(indices[i], indices[i+1], indices[i+2]);
+			}
+			if (children.size() == 0) {
+				Node node2 = modelBuilder.node();
+				node2.id = "leaves";
+				node2.translation.set(0, length, 0);
+				meshBuilder = modelBuilder.part("leaves", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse,  Color.GREEN)));
+				meshBuilder.sphere(length * 3, length * 3, length * 3, 6, 4);
 			}
 			model = modelBuilder.end();
 			modelInstance = new ModelInstance(model);

@@ -51,7 +51,7 @@ public class Main extends ApplicationAdapter {
 		LSystem lSystem = new LSystem("X", rules);
 		String res = lSystem.run(3);
 		System.out.println(res);
-		LSymbolContext context = new TestSymbolContext(45, 25);
+		LSymbolContext context = new TestSymbolContext(45, 25, 45, 75);
 		graph = LGraphBuilder.buildGraph(lSystem, context);
 		
 		groundTexture = new Texture(Gdx.files.internal("ground.png"));
