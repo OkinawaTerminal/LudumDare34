@@ -114,7 +114,7 @@ public class LNode extends Object3D{
 			Node node1 = modelBuilder.node();
 			node1.id = "branch";
 			MeshPartBuilder meshBuilder;
-			meshBuilder = modelBuilder.part("part1", GL20.GL_TRIANGLE_FAN, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, barkColor)));
+			meshBuilder = modelBuilder.part("part1", GL20.GL_TRIANGLES, Usage.Position, new Material(new ColorAttribute(ColorAttribute.Diffuse, barkColor)));
 			meshBuilder.vertex(
 					0.000000f * maxRad, -0.000000f, -0.500000f * maxRad,
 					0.000000f * minRad, length, -0.500000f * minRad,

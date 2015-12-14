@@ -11,12 +11,12 @@
         "axiom": "X",
         "numGenerations": 3,
         "branchingAngle": 45.0,
-        "smallestLength": 35.0,
+        "smallestLength": 25.0,
         "maxRandAngle": 45.0,
-        "trunkBaseSize": 75.0,
-        "leafClusterSize": 120.0,
+        "trunkBaseSize": 120.0,
+        "leafClusterSize": 80.0,
         "barkColor": "BROWN",
-        "leafColor": "CORAL"
+        "leafColor": "OLIVE"
       }
     },
     {

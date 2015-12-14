@@ -35,8 +35,7 @@ public class BonsaiController {
 			ruleSet.parse(entry);
 			ruleSets.put(ruleSet.name, ruleSet);
 		}
-		String initialRuleSetName = (String)ruleSets.keySet().toArray()[0];
-		selectRuleSet(initialRuleSetName);
+		selectRuleSet("Bonsai");
 	}
 	
 	public String[] listRuleSets() {
