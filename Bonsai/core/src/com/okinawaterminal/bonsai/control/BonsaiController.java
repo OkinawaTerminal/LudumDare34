@@ -1,8 +1,6 @@
 package com.okinawaterminal.bonsai.control;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
@@ -18,7 +16,7 @@ public class BonsaiController {
 	public Map<String, RuleSet> ruleSets;
 	public String currentRuleSetName;
 	public RuleSet currentRuleSet;
-	public List<String> currentRules;
+	public String[] currentRules;
 	public RuleVariables currentRuleValues;
 	public LNode treeGraph;
 	
@@ -46,12 +44,12 @@ public class BonsaiController {
 	public void selectRuleSet(String ruleSetName) {
 		currentRuleSetName = ruleSetName;
 		currentRuleSet = ruleSets.get(currentRuleSetName);
-		currentRules = Arrays.asList(currentRuleSet.rules);
+		currentRules = currentRuleSet.rules.clone();
 		currentRuleValues = currentRuleSet.defaults.cpy();
 	}
 	
 	public void buildTree() {
-		LSystem lSystem = new LSystem(currentRuleValues.axiom, currentRuleSet.rules);
+		LSystem lSystem = new LSystem(currentRuleValues.axiom, currentRules);
 		lSystem.run(currentRuleValues.numGenerations);
 		TestSymbolContext context = new TestSymbolContext(currentRuleValues.branchingAngle,
 				currentRuleValues.smallestLength, currentRuleValues.maxRandAngle,

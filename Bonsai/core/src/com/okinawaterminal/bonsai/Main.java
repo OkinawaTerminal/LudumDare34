@@ -16,18 +16,11 @@ import com.badlogic.gdx.graphics.g3d.attributes.TextureAttribute;
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController;
 import com.badlogic.gdx.graphics.g3d.utils.MeshPartBuilder;
 import com.badlogic.gdx.graphics.g3d.utils.ModelBuilder;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.okinawaterminal.bonsai.control.BonsaiController;
 import com.okinawaterminal.bonsai.lsystem.LNode;
+import com.okinawaterminal.bonsai.ui.UserInterface;
 
 public class Main extends ApplicationAdapter {
 	Camera cam;
@@ -40,14 +33,15 @@ public class Main extends ApplicationAdapter {
 	Model groundModel;
 	ModelInstance groundInstance;
 	BonsaiController bonsaiController;
+	UserInterface ui;
 	
-	Stage stage;
-	Skin skin;
 	
 	@Override
 	public void create () {
 		bonsaiController = new BonsaiController("ruleSets.json");
 		bonsaiController.buildTree();
+		
+		ui = new UserInterface(bonsaiController);
 		
 		cam = new PerspectiveCamera(65, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.position.set(0, 400, 700);
@@ -56,7 +50,7 @@ public class Main extends ApplicationAdapter {
 		cam.far = 100000.0f;
 		cam.update();
 		
-		viewport = new ExtendViewport(640f, 480f, cam);
+		viewport = new ExtendViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), cam);
 		
 		InputMultiplexer inputMultiplexer = new InputMultiplexer();
 		camController = new CameraInputController(cam);
@@ -73,32 +67,9 @@ public class Main extends ApplicationAdapter {
 		groundModel = modelBuilder.end();
 		groundInstance = new ModelInstance(groundModel);
 		
-		stage = new Stage(new ScreenViewport());
-		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		inputMultiplexer.addProcessor(stage);
+		inputMultiplexer.addProcessor(ui.getInputProcessor());
 		inputMultiplexer.addProcessor(camController);
 		Gdx.input.setInputProcessor(inputMultiplexer);
-		
-		TextButton button = new TextButton("click me", skin, "default");
-		button.setWidth(200);
-		button.setHeight(50);
-		
-		final Dialog dialog = new Dialog("Click Message", skin);
-		
-		button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				dialog.show(stage);
-				Timer.schedule(new Timer.Task() {
-					@Override
-					public void run() {
-						dialog.hide();
-					}
-				}, 10);
-			}
-		});
-		
-		stage.addActor(button);
 	}
 
 	@Override
@@ -107,19 +78,19 @@ public class Main extends ApplicationAdapter {
 		Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 		
+		viewport.apply();
 		mb.begin(cam);
 		mb.render(groundInstance);
 		bonsaiController.treeGraph.render(mb);
 		mb.end();
 		
-		stage.act(Gdx.graphics.getDeltaTime());
-		stage.draw();
+		ui.render();
 	}
 	
 	@Override
 	public void resize(int width, int height) {
 		viewport.update(width, height);
-		stage.getViewport().update(width, height);
+		ui.resize(width, height);
 	};
 	
 	@Override
@@ -129,6 +100,7 @@ public class Main extends ApplicationAdapter {
 		groundModel.dispose();
 		groundTexture.dispose();
 		
-		stage.dispose();
+//		stage.dispose();
+		ui.dispose();
 	}
 }

@@ -14,9 +14,9 @@
         "smallestLength": 25.0,
         "maxRandAngle": 45.0,
         "trunkBaseSize": 120.0,
-        "leafClusterSize": 80.0,
-        "barkColor": "BROWN",
-        "leafColor": "OLIVE"
+        "leafClusterSize": 100.0,
+        "barkColor": "Dark Grey",
+        "leafColor": "Pink"
       }
     },
     {
@@ -32,9 +32,26 @@
         "maxRandAngle": 0.0,
         "trunkBaseSize": 30.0,
         "leafClusterSize": 120.0,
-        "barkColor": "BROWN",
-        "leafColor": "CORAL"
+        "barkColor": "Brown",
+        "leafColor": "Olive"
       }
+    },
+    {
+    	"name": "Tree",
+    	"rules": [
+    		"F->FF-[-F+F+F]+[+F-F-F]"
+    	],
+    	"defaults": {
+    		"axiom": "F",
+    		"numGenerations": 3,
+    		"branchingAngle": 45.0,
+    		"smallestLength": 25.0,
+    		"maxRandAngle": 10.0,
+    		"trunkBaseSize": 20.0,
+    		"leafClusterSize": 40.0,
+    		"barkColor": "Dark Grey",
+    		"leafColor": "Maroon"
+    	}
     }
   ]
 }

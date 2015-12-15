@@ -37,6 +37,7 @@ public class LSystem {
 	
 	private String[] stripWhiteSpace(String[] strings) {
 		for (int i = 0; i < strings.length; i++) {
+			if (strings[i] == null || strings[i].equals("")) continue; 
 			strings[i] = strings[i].replaceAll("\\s+", "");
 		}
 		return strings;
@@ -45,6 +46,7 @@ public class LSystem {
 	private String getRule(char c) {
 		List<String> matches = new ArrayList<String>();
 		for (int i = 0; i < rules.length; i++) {
+			if (rules[i] == null || rules[i].equals("")) continue;
 			if (rules[i].charAt(0) == c) {
 				matches.add(rules[i].substring(3));
 			}
