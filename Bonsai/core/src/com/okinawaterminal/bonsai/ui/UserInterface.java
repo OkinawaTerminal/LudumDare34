@@ -38,8 +38,9 @@ public class UserInterface {
 	TextField axiomField;
 	
 	Slider genSlider;
-	Slider lenSlider;
 	Slider angSlider;
+	Slider lenSlider;
+	Slider randSlider;
 	Slider trunkSlider;
 	Slider leafSlider;
 	
@@ -118,6 +119,17 @@ public class UserInterface {
 		settingsDialog.add(genGroup).width(400);
 		settingsDialog.row();
 		
+		Table angGroup = new Table(skin);
+		angGroup.add("angle: ").padRight(5);
+		angGroup.add("15").padRight(5);
+		
+		angSlider = new Slider(15, 90, 5, false, skin);
+		angGroup.add(angSlider).prefWidth(999);
+		
+		angGroup.add("90").padLeft(5).padRight(5);
+		settingsDialog.add(angGroup).width(400);
+		settingsDialog.row();
+		
 		Table lenGroup = new Table(skin);
 		lenGroup.add("length: ").padRight(5);
 		lenGroup.add("5").padRight(5);
@@ -129,15 +141,15 @@ public class UserInterface {
 		settingsDialog.add(lenGroup).width(400);
 		settingsDialog.row();
 		
-		Table angGroup = new Table(skin);
-		angGroup.add("randomness: ").padRight(5);
-		angGroup.add("0").padRight(5);
+		Table randGroup = new Table(skin);
+		randGroup.add("randomness: ").padRight(5);
+		randGroup.add("0").padRight(5);
 		
-		angSlider = new Slider(0, 90, 5, false, skin);
-		angGroup.add(angSlider).prefWidth(999);
+		randSlider = new Slider(0, 90, 5, false, skin);
+		randGroup.add(randSlider).prefWidth(999);
 		
-		angGroup.add("90").padLeft(5).padRight(5);
-		settingsDialog.add(angGroup).width(400);
+		randGroup.add("90").padLeft(5).padRight(5);
+		settingsDialog.add(randGroup).width(400);
 		settingsDialog.row();
 		
 		Table trunkGroup = new Table(skin);
@@ -251,8 +263,9 @@ public class UserInterface {
 		bControl.currentRuleValues.axiom = axiomField.getText().charAt(0);
 		
 		bControl.currentRuleValues.numGenerations = (int)genSlider.getValue();
+		bControl.currentRuleValues.branchingAngle = angSlider.getValue();
 		bControl.currentRuleValues.smallestLength = lenSlider.getValue();
-		bControl.currentRuleValues.maxRandAngle = angSlider.getValue();
+		bControl.currentRuleValues.maxRandAngle = randSlider.getValue();
 		bControl.currentRuleValues.trunkBaseSize = trunkSlider.getValue();
 		bControl.currentRuleValues.leafClusterSize = leafSlider.getValue();
 		
@@ -275,8 +288,9 @@ public class UserInterface {
 		axiomField.setText(String.valueOf(bControl.currentRuleValues.axiom));
 		
 		genSlider.setValue(bControl.currentRuleValues.numGenerations);
+		angSlider.setValue(bControl.currentRuleValues.branchingAngle);
 		lenSlider.setValue(bControl.currentRuleValues.smallestLength);
-		angSlider.setValue(bControl.currentRuleValues.maxRandAngle);
+		randSlider.setValue(bControl.currentRuleValues.maxRandAngle);
 		trunkSlider.setValue(bControl.currentRuleValues.trunkBaseSize);
 		leafSlider.setValue(bControl.currentRuleValues.leafClusterSize);
 		
